@@ -1,18 +1,7 @@
 import "@mantine/core/styles.css";
 import "@mantine/code-highlight/styles.css";
 import "./App.css";
-import {
-    Box,
-    Code,
-    Divider,
-    Flex,
-    Grid,
-    Text,
-    Title,
-    Tooltip,
-} from "@mantine/core";
-import { CodeHighlight } from "@mantine/code-highlight";
-import { useEffect, useMemo, useState } from "react";
+import { Code, Flex, Text, Title, Tooltip } from "@mantine/core";
 import { CodeRecord, NodeInterface } from "./interfaces";
 
 const code: CodeRecord = {
@@ -62,7 +51,7 @@ function App() {
         keys.forEach((key) => {
             let values = json[key];
 
-            values.forEach((element: any, id: any) => {
+            values.forEach((element: any, _id: any) => {
                 nodes.push({
                     value: element.value,
                     confidence: element.score,
@@ -97,7 +86,13 @@ function App() {
         let lastEnd = 0;
         let arr: any[] = [];
         nodes.forEach((node, id) => {
-            let { value, scope, link, key, node: element } = node;
+            let {
+                value: _value,
+                scope,
+                link: _link,
+                key: _key,
+                node: element,
+            } = node;
             let { start, end } = scope;
 
             let before = text.slice(lastEnd, start - 1);
@@ -169,7 +164,10 @@ function App() {
                                         return text;
                                     } else {
                                         return (
-                                            <Tooltip label={text.data.key}>
+                                            <Tooltip
+                                                label={text.data.key}
+                                                key={id + text.data.key}
+                                            >
                                                 {text.node}
                                             </Tooltip>
                                         );
