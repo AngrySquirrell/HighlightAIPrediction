@@ -83,12 +83,11 @@ function App() {
                         className="nowrap"
                     >
                         {text.slice(element.start - 1, element.end)}
-                        {element.score ||
-                            (element.score === 0 && (
-                                <Text span c={"grey"} fz={10} px={2}>
-                                    {key}: {element.score}
-                                </Text>
-                            ))}
+                        {(element.score || element.score >= 0) && (
+                            <Text span c={"grey"} fz={10} px={2}>
+                                {key}: {element.score}
+                            </Text>
+                        )}
                     </Text>
                 );
                 nodes.push({
