@@ -3,6 +3,7 @@ import "@mantine/code-highlight/styles.css";
 import "./App.css";
 import { Code, Flex, Text, Title, Tooltip } from "@mantine/core";
 import { CodeRecord, NodeInterface } from "./interfaces";
+import React from "react";
 
 const code: CodeRecord = {
     text: "Mme Robert, 87 ans, vient ce jour pour un suivi de diabète de type 2 diagnostiqué le 24/06/2022 et une arthrite du pied.",
@@ -52,29 +53,30 @@ function App() {
             let values = json[key];
 
             values.forEach((element: any, _id: any) => {
+                let node = (
+                    <Text
+                        // c={"red"}
+                        // fw={"bold"}
+                        style={{
+                            backgroundColor: "rgba(255, 0, 0, 0.1)",
+                            borderRadius: 8,
+                        }}
+                        px={4}
+                        span
+                    >
+                        {text.slice(element.start - 1, element.end)}
+                        <Text span c={"grey"} fz={10} px={2}>
+                            {key}: {element.score}
+                        </Text>
+                    </Text>
+                );
                 nodes.push({
                     value: element.value,
                     confidence: element.score,
                     scope: { start: element.start, end: element.end },
                     link: element.linked_to,
                     key: key,
-                    node: (
-                        <Text
-                            // c={"red"}
-                            // fw={"bold"}
-                            style={{
-                                backgroundColor: "rgba(255, 0, 0, 0.1)",
-                                borderRadius: 8,
-                            }}
-                            px={4}
-                            span
-                        >
-                            {text.slice(element.start - 1, element.end)}
-                            <Text span c={"grey"} fz={10} px={2}>
-                                {key}: {element.score}
-                            </Text>
-                        </Text>
-                    ),
+                    node,
                 });
             });
         });
@@ -163,13 +165,33 @@ function App() {
                                     if (typeof text === "string") {
                                         return text;
                                     } else {
+                                        if (text.data.link.length > 0)
+                                            return (
+                                                <Tooltip
+                                                    label={`${text.data.link
+                                                        .map(
+                                                            (link: any) =>
+                                                                `${
+                                                                    link.type
+                                                                }: ${
+                                                                    link.value
+                                                                } ${
+                                                                    link.score &&
+                                                                    `(${link.score})`
+                                                                }`
+                                                        )
+                                                        .join(", ")}`}
+                                                    key={id + text.data.key}
+                                                >
+                                                    {text.node}
+                                                </Tooltip>
+                                            );
                                         return (
-                                            <Tooltip
-                                                label={text.data.key}
+                                            <React.Fragment
                                                 key={id + text.data.key}
                                             >
                                                 {text.node}
-                                            </Tooltip>
+                                            </React.Fragment>
                                         );
                                     }
                                 }
