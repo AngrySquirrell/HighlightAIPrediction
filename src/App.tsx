@@ -36,7 +36,7 @@ const code: CodeRecord = {
             value: "arthrite du pied",
             start: 104,
             end: 119,
-            score: 0.78,
+            score: 0,
             linked_to: [],
         },
     ],
@@ -56,7 +56,7 @@ function App() {
                 let node = (
                     <Text
                         style={{
-                            backgroundColor: `rgba(255, 0, 0, 0.3)`,
+                            backgroundColor: `rgba(255, 100, 50, 0.3)`,
                             filter: `hue-rotate(${90 * element.score}deg)`,
                             borderRadius: 8,
                         }}
