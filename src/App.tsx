@@ -1,7 +1,7 @@
 import "@mantine/core/styles.css";
 import "@mantine/code-highlight/styles.css";
 import "./App.css";
-import { Code, Flex, Text, Title, Tooltip } from "@mantine/core";
+import { Code, Flex, ScrollArea, Text, Title, Tooltip } from "@mantine/core";
 import { CodeRecord, NodeInterface } from "./interfaces";
 import React from "react";
 
@@ -56,7 +56,7 @@ function App() {
                 let node = (
                     <Text
                         style={{
-                            backgroundColor: `rgba(255, 100, 50, 0.25)`,
+                            backgroundColor: `rgba(255, 100, 80, 0.25)`,
                             filter: `hue-rotate(${90 * element.score}deg)`,
                             borderRadius: 8,
                         }}
@@ -127,17 +127,51 @@ function App() {
                     bg={"#1111"}
                     style={{ borderRadius: 8 }}
                 >
-                    <Flex w={"45%"} direction={"column"} p={16}>
-                        <Title>DATA</Title>
-                        <Code p={32} m={16}>
-                            {JSON.stringify(code, null, 2)}
-                        </Code>
-                        <Title>STRING</Title>
-                        <Code p={32} m={16}>
-                            {code.text as string}
-                        </Code>
-                        {/* <Code>{JSON.stringify(a, null, 2)}</Code> */}
-                    </Flex>
+                    <ScrollArea w={"48%"} h={"100%"} p={16}>
+                        <Flex w={"100%"} direction={"column"}>
+                            <Title>DATA</Title>
+                            <Code
+                                p={32}
+                                m={16}
+                                block
+                                maw={"100%"}
+                                color="dark.4"
+                                c={"#fff"}
+                            >
+                                {JSON.stringify(code, null, 2)}
+                            </Code>
+                            <Title>STRING</Title>
+                            <Code
+                                p={32}
+                                m={16}
+                                maw={"100%"}
+                                color="dark.4"
+                                c={"#fff"}
+                            >
+                                {code.text as string}
+                            </Code>
+                            <Title>PARSED ARRAY</Title>
+                            <Code
+                                p={32}
+                                m={16}
+                                block
+                                maw={"100%"}
+                                color="dark.4"
+                                c={"#fff"}
+                            >
+                                {JSON.stringify(
+                                    highlightText(code).map((el, _id) => {
+                                        return {
+                                            ...el,
+                                            node: undefined,
+                                        };
+                                    }),
+                                    null,
+                                    "\t"
+                                )}
+                            </Code>
+                        </Flex>
+                    </ScrollArea>
                     <Flex w="fit-content">
                         <div
                             style={{
@@ -147,16 +181,7 @@ function App() {
                             }}
                         />
                     </Flex>
-                    <Flex w={"45%"} direction={"column"}>
-                        {/* <Text>
-                            {highlightText(code).map((text, id) => {
-                                return (
-                                    <Tooltip label={text.key}>
-                                        {text.node}
-                                    </Tooltip>
-                                );
-                            })}
-                        </Text> */}
+                    <Flex w={"48%"} direction={"column"}>
                         <Text>
                             {parseText(code, highlightText(code)).map(
                                 (text, id) => {
