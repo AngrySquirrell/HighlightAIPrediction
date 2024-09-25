@@ -12,7 +12,7 @@ const code: CodeRecord = {
             value: "87 ans",
             start: 13,
             end: 18,
-            score: 0.8,
+            score: 0.5,
             linked_to: [],
         },
     ],
@@ -21,7 +21,7 @@ const code: CodeRecord = {
             value: "diabète de type 2",
             start: 52,
             end: 68,
-            score: 0.72,
+            score: 1,
             linked_to: [
                 {
                     type: "Date",
@@ -55,10 +55,9 @@ function App() {
             values.forEach((element: any, _id: any) => {
                 let node = (
                     <Text
-                        // c={"red"}
-                        // fw={"bold"}
                         style={{
-                            backgroundColor: "rgba(255, 0, 0, 0.1)",
+                            backgroundColor: `rgba(255, 0, 0, 0.3)`,
+                            filter: `hue-rotate(${90 * element.score}deg)`,
                             borderRadius: 8,
                         }}
                         px={4}
