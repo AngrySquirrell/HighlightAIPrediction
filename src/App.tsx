@@ -56,7 +56,7 @@ function App() {
                 let node = (
                     <Text
                         style={{
-                            backgroundColor: `rgba(255, 100, 50, 0.3)`,
+                            backgroundColor: `rgba(255, 100, 50, 0.25)`,
                             filter: `hue-rotate(${90 * element.score}deg)`,
                             borderRadius: 8,
                         }}
