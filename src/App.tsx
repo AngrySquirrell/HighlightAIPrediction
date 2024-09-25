@@ -62,6 +62,7 @@ function App() {
                         }}
                         px={4}
                         span
+                        className="nowrap"
                     >
                         {text.slice(element.start - 1, element.end)}
                         <Text span c={"grey"} fz={10} px={2}>
