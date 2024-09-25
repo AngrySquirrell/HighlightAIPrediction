@@ -13,30 +13,37 @@ export interface NodeInterface {
 // Refactorizes the data to slice it
 const highlightText = (json: any) => {
     let nodes: NodeInterface[] = [];
+
     let text = json.text;
     let keys = Object.keys(json).filter((key) => key !== "text");
+
     keys.forEach((key) => {
         let values = json[key];
-        values.forEach((element: any, id: any) => {
+
+        values.forEach((element: any, _id: any) => {
+            let node = (
+                <Text
+                    style={{
+                        backgroundColor: `rgba(255, 100, 80, 0.25)`,
+                        filter: `hue-rotate(${90 * element.score}deg)`,
+                        borderRadius: 8,
+                    }}
+                    px={4}
+                    span
+                >
+                    {text.slice(element.start - 1, element.end)}
+                    <Text span c={"grey"} fz={10} px={2}>
+                        {key}: {element.score}
+                    </Text>
+                </Text>
+            );
             nodes.push({
                 value: element.value,
                 confidence: element.score,
                 scope: { start: element.start, end: element.end },
                 link: element.linked_to,
                 key: key,
-                node: (
-                    <Text
-                        c={"red"}
-                        fw={"bold"}
-                        style={{ backgroundColor: "yellow" }}
-                        span
-                    >
-                        {text.slice(element.start - 1, element.end)}
-                        <Text span c={"grey"} fz={10} px={2}>
-                            {key}: {element.score}
-                        </Text>
-                    </Text>
-                ),
+                node,
             });
         });
     });
@@ -50,23 +57,33 @@ const parseText = (json: any, nodes: NodeInterface[]) => {
     let lastEnd = 0;
     let arr: any[] = [];
     nodes.forEach((node, id) => {
-        let { value, scope, link, key, node: element } = node;
+        let {
+            value: _value,
+            scope,
+            link: _link,
+            key: _key,
+            node: element,
+        } = node;
         let { start, end } = scope;
+
         let before = text.slice(lastEnd, start - 1);
         arr.push(before);
         arr.push({ data: node, node: element });
         if (id === nodes.length - 1) {
             let after = text.slice(end);
+
             arr.push(after);
         }
         lastEnd = end;
     });
+    console.log("arr", arr);
     return arr;
 };
 
 // TSX
 {
     parseText(code, highlightText(code)).map((text, id) => {
+        console.log("text", text);
         if (typeof text === "string") {
             return text;
         } else {
