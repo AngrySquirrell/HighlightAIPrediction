@@ -4,7 +4,7 @@ interface complexKey {
     value: string;
     start: number;
     end: number;
-    score: number;
+    score?: number;
     linked_to: linkType[];
 }
 interface linkType {

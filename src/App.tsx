@@ -33,6 +33,21 @@ const code: CodeRecord = {
             ],
         },
         {
+            value: "diagnostiqué",
+            start: 70,
+            end: 82,
+            score: undefined,
+            linked_to: [
+                {
+                    type: "Date",
+                    value: "24/06/2022",
+                    start: 86,
+                    end: 95,
+                    score: 0.67,
+                },
+            ],
+        },
+        {
             value: "arthrite du pied",
             start: 104,
             end: 119,
@@ -56,7 +71,10 @@ function App() {
                 let node = (
                     <Text
                         style={{
-                            backgroundColor: `rgba(255, 100, 80, 0.25)`,
+                            backgroundColor:
+                                element.score === undefined
+                                    ? `rgba(55, 55, 55, 0.1)`
+                                    : `rgba(255, 100, 80, 0.25)`,
                             filter: `hue-rotate(${90 * element.score}deg)`,
                             borderRadius: 8,
                         }}
@@ -65,9 +83,11 @@ function App() {
                         className="nowrap"
                     >
                         {text.slice(element.start - 1, element.end)}
-                        <Text span c={"grey"} fz={10} px={2}>
-                            {key}: {element.score}
-                        </Text>
+                        {element.score && (
+                            <Text span c={"grey"} fz={10} px={2}>
+                                {key}: {element.score}
+                            </Text>
+                        )}
                     </Text>
                 );
                 nodes.push({
