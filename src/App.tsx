@@ -241,7 +241,6 @@ function App() {
                       <Textarea
                           w={"100%"}
                           h={"100%"}
-                        //   size="xl"
               value={splitText}
               onChange={(e) => setSplitText(e.target.value)}
             />
