@@ -241,6 +241,7 @@ function App() {
                       <Textarea
                           w={"100%"}
                           h={"100%"}
+                          autosize
               value={splitText}
               onChange={(e) => setSplitText(e.target.value)}
             />
@@ -250,7 +251,8 @@ function App() {
               style={{
                 backgroundColor: "black",
                 height: "100%",
-                width: "1px",
+                              width: "1px",
+                margin: "0 16px",
               }}
             />
           </Flex>
